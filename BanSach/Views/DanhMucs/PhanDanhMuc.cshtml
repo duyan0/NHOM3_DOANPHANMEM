@@ -1,0 +1,110 @@
+﻿@model IEnumerable<BanSach.Models.DanhMuc>
+
+<style>
+    .danhmuc a {
+        color: black;
+        text-decoration: none;
+        z-index: 1000;
+    }
+
+        .danhmuc a:hover {
+            color: chocolate;
+            transition: color 0.25s ease-in-out;
+            z-index: 1000;
+        }
+
+    .container-danhmuc {
+        border-left: 1px solid black;
+        border-radius: 10px;
+        background-color: white;
+        padding: 10px;
+        z-index: 1000;
+    }
+
+    .tentheloai {
+        list-style-type: none;
+        padding: 5px;
+        margin: 5px 0;
+        z-index: 1000;
+    }
+
+        .tentheloai:hover {
+            background-color:#71f361;
+            border-radius:5px;
+        }
+
+    .collapse {
+        position: relative;
+        z-index: 1000;
+        display: none; /* Để collapse ẩn mặc định */
+    }
+</style>
+
+<div class="container-danhmuc">
+    <div class="list-group">
+        @{
+            var temp = new BanSach.Models.DanhMuc();
+
+            foreach (var item in Model)
+            {
+                if (temp.DanhMuc1 != item.DanhMuc1)
+                {
+                    if (Session[item.DanhMuc1] == null)
+                    {
+                        <div class="list-group-item danhmuc">
+                            <a href="javascript:void(0)" role="button">
+                                <strong>@item.DanhMuc1</strong>
+                            </a>
+
+                            <div class="collapse" id="collapse-@item.DanhMuc1.Replace(" ", "-")">
+                                <ul class="list-unstyled mt-2 ml-3">
+                                    @foreach (var item2 in Model)
+                                    {
+                                        if (item2.DanhMuc1 == item.DanhMuc1 && !string.IsNullOrEmpty(item2.TheLoai))
+                                        {
+                                            <li class="tentheloai">
+                                                @Html.ActionLink(item2.TheLoai, "ProductList", "SanPhams", new { category = item2.ID }, new { @class = "tentheloai-link text-dark" })
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    }
+                    Session[item.DanhMuc1] = "co";
+                    temp = item;
+                }
+            }
+
+            foreach (var item in Model)
+            {
+                Session[item.DanhMuc1] = null;
+            }
+        }
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Sử dụng sự kiện hover để mở/đóng danh mục con
+        $('.danhmuc').hover(
+            function () {
+                // Khi hover vào, phần collapse sẽ mở ra
+                $(this).find('.collapse').stop(true, true).slideDown(100);
+            },
+            function () {
+                // Khi rời chuột, phần collapse sẽ đóng lại
+                $(this).find('.collapse').stop(true, true).slideUp(100);
+            }
+        );
+
+        // Toggle the navbar-vertical khi nhấn vào nút "Danh mục"
+        $('[data-toggle="collapse"]').click(function (e) {
+            e.preventDefault();
+            var target = $(this).attr('href');
+            $(target).stop(true, true).slideToggle(100);
+        });
+    });
+</script>

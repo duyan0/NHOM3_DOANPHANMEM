@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "Quản lý Nhà Sách";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .carousel-inner, .carousel-inner a, .col-lg-3 .d-flex, #prv, #nxt {
+        border-radius: 8px;
+    }
+
+    .carousel-inner {
+        z-index: 1; /* Ensure carousel items are properly stacked */
+    }
+
+    .carousel-caption {
+        z-index: 2; /* Ensure captions are above the images */
+    }
+</style>
+
+<div id="header-carousel" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <!-- Poster 1 start -->
+        <div class="carousel-item active" style="height: 480px;">
+            <img class="img-fluid" src="~/Content/img/slide1.jpg" alt="Slide 1 - Giảm giá sách">
+            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                <div class="p-3" style="max-width: 700px;">
+                    <h4 class="text-light text-uppercase font-weight-medium mb-3">Siêu giảm giá</h4>
+                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Giá cả hợp lý</h3>
+                    <a href="~/SanPhams/ProductList" class="btn btn-light py-2 px-3">Mua ngay</a>
+                </div>
+            </div>
+        </div>
+        <!-- Poster 1 end -->
+        <!-- Poster 2 start -->
+        <div class="carousel-item" style="height: 480px;">
+            <img class="img-fluid" src="~/Content/img/slide.jpg" alt="Slide 2 - Giảm 100% cho sách chọn lọc">
+            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                <div class="p-3" style="max-width: 700px;">
+                    <h4 class="text-light text-uppercase font-weight-medium mb-3">Giảm 50% tặng miễn phí</h4>
+                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Giá cả hợp lý</h3>
+                    <a href="~/SanPhams/ProductList" class="btn btn-light py-2 px-3">Mua ngay</a>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item" style="height: 480px;">
+            <img class="img-fluid" src="~/Content/img/slide2.png" alt="Slide 3 - Giảm 100% cho sách chọn lọc">
+            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                <div class="p-3" style="max-width: 700px;">
+                    <h4 class="text-light text-uppercase font-weight-medium mb-3">Giảm 50% tặng miễn phí</h4>
+                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Giá cả hợp lý</h3>
+                    <a href="~/SanPhams/ProductList" class="btn btn-light py-2 px-3">Mua ngay</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Carousel Controls -->
+    <a class="carousel-control-prev" href="#header-carousel" role="button" data-slide="prev">
+        <div class="btn btn-dark" style="width: 45px; height: 45px;" id="prv">
+            <span class="carousel-control-prev-icon mb-n2" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </div>
+    </a>
+    <a class="carousel-control-next" href="#header-carousel" role="button" data-slide="next">
+        <div class="btn btn-dark" style="width: 45px; height: 45px;" id="nxt">
+            <span class="carousel-control-next-icon mb-n2" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </div>
+    </a>
+</div>
+
+@Html.Action("TopBanChay", "DonHangCTs")

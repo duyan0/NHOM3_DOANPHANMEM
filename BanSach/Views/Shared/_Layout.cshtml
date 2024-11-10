@@ -1,0 +1,315 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Quản lý nhà sách - Võ Duy Ân</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Free HTML Templates">
+    <meta name="description" content="Free HTML Templates">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.2.0/css/all.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.2.0/css/sharp-solid.css">
+    <!-- Favicon -->
+    <link href="~/Content/img/logo-icon.png" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="~/Content/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/Content/css/duyan.css" rel="stylesheet">
+    <link href="~/Content/css/admin.css" rel="stylesheet">
+    <script src="~/Scripts/changeimg.js"></script>
+</head>
+
+<body>
+    <div id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Topbar Start -->
+    <div class="row align-items-center py-3 px-xl-5" id="topbar" style="background-color: #1f1f20;">
+        <div class="col-lg-3 d-none d-lg-block">
+            <a href="~/SanPhams/TrangChu" class="text-decoration-none">
+                <h2 class="m-0 display-5 font-weight-semi-bold" style="color: white;">
+                    <img src="~/Content/img/logosach.png" style="width:40px;">
+                    Võ Duy Ân
+                </h2>
+            </a>
+        </div>
+        <div class="col-lg-6 col-6 text-right">
+            @using (Html.BeginForm("ProductList", "SanPhams", FormMethod.Get))
+            {
+                <div class="input-group" style="margin-left:10px;">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="border-radius:10px 0 0 10px;">
+                            <i class="fas fa-search"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Nhập tên sách bạn muốn tìm" name="SearchString" style="border-radius:0 10px 10px 0;">
+                </div>
+            }
+        </div>
+        <div class="col-lg-3 col-6 text-right">
+            <div class="text-white" id="current-time" style="font-size: 1rem; margin-bottom: 10px;">
+                @DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")
+            </div>
+            <a href="~/ShoppingCart/ShowCart" class="btn border" style="border-radius:10px;">
+                <i class="fas fa-shopping-cart" style="color:white;">Giỏ hàng</i>
+                @Html.Action("BagCart", "ShoppingCart")
+            </a>
+        </div>
+    </div>
+    <!-- Topbar End -->
+    <!-- Navbar Start -->
+    <div class="container-fluid" id="navbar" style="background-color:#1f1f20;">
+        <div class="row border-top px-xl-5">
+            <div class="col-lg-3 d-none d-lg-inline-block">
+                <a class="btn shadow-none d-flex align-items-center justify-content-between text-white w-50" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; padding: 0 20px; background-color:white;">
+                    <h6 class="m-0">Danh mục</h6>
+                    <i class="fa fa-angle-down text-dark"></i>
+                </a>
+                <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start bg-light" id="navbar-vertical" style="min-width: 250px;">
+                    @Html.Action("PhanDanhMuc", "DanhMucs")
+                </nav>
+            </div>
+            <div class="col-lg-9">
+                <nav class="navbar navbar-expand-lg navbar-light py-3 py-lg-0 px-0">
+                    <a href="~/SanPhams/ProductList" class="text-decoration-none d-block d-lg-none">
+                        <img src="~/Content/img/logosach.png" style="width:40px; height: 40px; margin-right: 10px;">
+                        <h1 class="m-0 display-5 font-weight-semi-bold text-white">Võ Duy Ân</h1>
+                    </a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse" style="background-color:#1f1f20;">
+                        <div class="navbar-nav ml-auto py-0" id="user">
+                            @if (Session["IDkh"] != null)
+                            {
+                                <div class="dropdown">
+                                    <a href="#" class="nav-item nav-link text-white">@Session["TenKH"]</a>
+                                    <div class="dropdown-content">
+                                        <a href="@Url.Action("InfoCustomer", "LoginUser")">Thông tin cá nhân</a>
+
+                                        <a href="~/KhachHangs/LichSuDonHang">Lịch sử đơn hàng</a>
+                                        <a href="@Url.Action("Logout", "LoginUser")">Đăng xuất</a>
+                                    </div>
+                                </div>
+                            }
+                            else if (Session["IdQly"] != null)
+                            {
+                                <a href="@Url.Action("QuanTri", "LoginUser")" class="nav-item nav-link">Trang ADMIN</a>
+                                <a href="@Url.Action("Logout", "LoginUser")" class="nav-item nav-link">Đăng xuất</a>
+                            }
+                            else
+                            {
+                                <a href="~/LoginUser/LoginAccountCus" class="nav-item nav-link">Đăng nhập</a>
+                                <a href="~/LoginUser/RegisterCus" class="nav-item nav-link">Đăng ký</a>
+                            }
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar End -->
+    <!-- Main Start -->
+    <div class="container-fluid pt-4" style="width: 100%; background-color: black;">
+        <div class="container-fluid" style="background-color: #1f1f20; border-radius: 15px; padding: 10px; margin: 0 7%; width: 86%; height: 100%;">
+            @RenderBody()
+        </div>
+    </div>
+    <!-- Main End -->
+    <!-- Footer Start -->
+    <footer class="card-body " style="background-color:black;">
+        <div class="ft">
+            <div class="kt p text-center">
+                <div class="pk ">
+                    <div class="pk-1 ">Võ Duy Ân</div>
+                    <div class="pk-2"><a href="gioi-thieu">Giới thiệu</a></div>
+                    <div class="pk-2"><a href="chinh-sach-doi-tra">Chính sách đổi trả</a></div>
+                    <div class="pk-2"><a href="chinh-sach-bao-mat">Chính sách bảo mật</a></div>
+                    <div class="pk-2"><a href="https://paca25.com/"><i class="fa-brands fa-twitter"></i> LOGO COPY TRÊN ĐÂY</a></div>
+                </div>
+                <div class="pk">
+                    <div class="pk-1">Hướng dẫn</div>
+                    <div class="pk-2"><a href="huong-dan-mua-sach">Hướng dẫn mua sách</a></div>
+                    <div class="pk-2"><a href="huong-dan-doi-tra">Hướng dẫn đổi trả</a></div>
+                    <div class="pk-2"><a href="https://paca25.com/"><i class="fa-brands fa-twitter"></i> LOGO COPY TRÊN ĐÂY</a></div>
+                </div>
+                <div class="pk">
+                    <div class="pk-1">Hỗ trợ</div>
+                    <div class="pk-2"><a href="https://www.facebook.com/VDuyA555/"><i class="fa-brands fa-facebook-f"></i> Facebook ( 7:00 - 22:00 )</a></div>
+                    <div class="pk-2"><a href="https://paca25.com/"><i class="fa-brands fa-twitter"></i> LOGO COPY TRÊN ĐÂY</a></div>
+                </div>
+                <div class="pk">
+                    <div class="pk-1">Follow US</div>
+                    <div class="pk-2 "><a href="https://www.facebook.com/VDuyA555/"><i class="fa-brands fa-square-facebook" style="color: #046ee5;"></i> Facebook</a></div>
+                    <div class="pk-2"><a href="https://www.facebook.com/VDuyA555/"><i class="fa-brands fa-discord"></i> Discord</a></div>
+                    <div class="pk-2"><a href="https://www.facebook.com/VDuyA555/"><i class="fa-brands fa-youtube" style="color: red;"></i> YouTube</a></div>
+                    <div class="pk-2"><a href="https://www.facebook.com/VDuyA555/"><i class="fa-brands fa-twitter"></i> Twitter</a></div>
+                    <div class="pk-2"><a href="https://paca25.com/"><i class="fa-brands fa-twitter"></i> LOGO COPY TRÊN ĐÂY</a></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright text-center text-success font-weight-bold " style="margin-top: 20px; color: #777;">
+            &copy; 2024 Võ Duy Ân. All rights reserved. Thời gian hiện tại: <span id="time" class="text-danger"></span>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                function updateTime() {
+                    var currentTime = new Date().toLocaleString();
+                    document.getElementById('time').textContent = currentTime;
+                }
+                updateTime();
+                setInterval(updateTime, 1000);
+            });
+        </script>
+
+    </footer>
+    <!-- Footer End -->
+    <a href="https://zalo.me/0355079864" target="_blank" class="zalo-contact">
+        <img src="~/Content/img/zalo.png" alt="Liên hệ qua Zalo" />
+    </a>
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/lib/easing/easing.min.js"></script>
+    <script src="~/Content/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="~/Scripts/main.js"></script>
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/bootstrap.bundle.js"></script>
+    @RenderSection("scripts", required: false)
+
+    <!-- Custom CSS -->
+    <style>
+
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            border-radius: 1rem;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+            border-radius: 1rem;
+        }
+
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .dropdown-content a:hover {
+                    background-color: #252222;
+                    border-radius: 1rem;
+                    color: white;
+                }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .navbar-light .navbar-nav .nav-link {
+            padding: 20px 10px;
+            outline: none;
+            color: white;
+            border-radius: 5px;
+        }
+
+            .navbar-light .navbar-nav .nav-link:hover,
+            .navbar-light .navbar-nav .nav-link.active {
+                color: white;
+                background-color: #313030;
+            }
+
+        #loading {
+            position: fixed; /* Đặt vị trí cố định */
+            width: 100%; /* Chiếm toàn bộ chiều rộng */
+            height: 100%; /* Chiếm toàn bộ chiều cao */
+            top: 0; /* Vị trí trên cùng */
+            left: 0; /* Vị trí bên trái */
+            background: rgba(255, 255, 255, 0.8); /* Nền trắng trong suốt */
+            z-index: 9999; /* Đảm bảo hiển thị trên các phần tử khác */
+            display: flex; /* Sử dụng flexbox */
+            align-items: center; /* Căn giữa theo chiều dọc */
+            justify-content: center; /* Căn giữa theo chiều ngang */
+        }
+
+        .spinner {
+            width: 50px; /* Đường kính vòng tròn */
+            height: 50px; /* Đường kính vòng tròn */
+            border: 6px solid rgba(255, 0, 0, 0.5); /* Màu nền cho vòng tròn với độ trong suốt */
+            border-top: 6px solid red; /* Màu cho phần trên */
+            border-radius: 50%; /* Bo góc thành hình tròn */
+            animation: spin 1s linear infinite; /* Áp dụng hiệu ứng quay */
+        }
+
+        .zalo-contact {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            z-index: 1000;
+            border-radius: 60%;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+            .zalo-contact img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .zalo-contact:hover {
+                transform: scale(1.1); /* Tăng kích thước khi hover */
+            }
+    </style>
+    <!-- FT nè -->
+    <!-- Custom JavaScript -->
+    <script>
+        window.addEventListener("load", function () {
+            const loadingElement = document.getElementById("loading");
+            loadingElement.style.display = "none";
+        });
+
+        function updateCurrentTime() {
+            const now = new Date();
+            const formattedTime = now.toLocaleString('vi-VN', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById("current-time").textContent = formattedTime;
+        }
+
+        // Cập nhật thời gian mỗi giây
+        setInterval(updateCurrentTime, 1000);
+
+        // Cập nhật khi trang được tải lần đầu
+        window.addEventListener("load", updateCurrentTime);
+    </script>
+</body>
+
+</html>

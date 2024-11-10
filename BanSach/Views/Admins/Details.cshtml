@@ -1,0 +1,70 @@
+﻿@model BanSach.Models.Admin
+
+@{
+    ViewBag.Title = "Chi tiết nhân viên";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="text-center mb-5 font-weight-bold ">Chi tiết tài khoản Admin</h2>
+
+<div class="container">
+    <div class="card shadow-sm justify-content-center border-0 rounded-lg">
+        <div class="card-body justify-content-center p-4">
+            <dl class="row justify-content-center">
+                <dt class="col-sm-3 font-weight-bold text-dark">
+                    Họ và tên
+                </dt>
+                <dd class="col-sm-9 text-muted">
+                    @Html.DisplayFor(model => model.HoTen)
+                </dd>
+
+                <dt class="col-sm-3 font-weight-bold text-dark">
+                    Email
+                </dt>
+                <dd class="col-sm-9 text-muted">
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+
+                <dt class="col-sm-3 font-weight-bold text-dark">
+                    Địa chỉ
+                </dt>
+                <dd class="col-sm-9 text-muted">
+                    @Html.DisplayFor(model => model.DiaChi)
+                </dd>
+
+                <dt class="col-sm-3 font-weight-bold text-dark">
+                    Số điện thoại
+                </dt>
+                <dd class="col-sm-9 text-muted">
+                    @Html.DisplayFor(model => model.SoDT)
+                </dd>
+
+                <dt class="col-sm-3 font-weight-bold text-dark">
+                    Vai trò
+                </dt>
+                <dd class="col-sm-9 text-muted">
+                    @Html.DisplayFor(model => model.VaiTro)
+                </dd>
+
+                <dt class="col-sm-3 font-weight-bold text-dark">
+                    Tài khoản
+                </dt>
+                <dd class="col-sm-9 text-muted">
+                    @Html.DisplayFor(model => model.TKhoan)
+                </dd>
+
+                <dt class="col-sm-3 font-weight-bold text-dark">
+                    Mật khẩu
+                </dt>
+                <dd class="col-sm-9 text-muted">
+                    @Html.DisplayFor(model => model.MKhau)
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mt-4 text-center">
+        @Html.ActionLink("Sửa", "Edit", new { id = Model.ID }, new { @class = "btn btn-warning  shadow-sm rounded" })
+        @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-secondary  ml-3 shadow-sm rounded" })
+    </div>
+</div>

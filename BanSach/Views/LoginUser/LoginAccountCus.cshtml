@@ -1,0 +1,128 @@
+﻿
+
+<style>
+    .field-validation-error {
+        color: red;
+        font-size: 16px;
+    }
+
+    .login-page {
+        width: 340px;
+        margin: 50px auto;
+    }
+
+    .form {
+        position: relative;
+        z-index: 1;
+        background: #ffffff;
+        max-width: 340px;
+        margin: 0 auto 50px;
+        padding: 40px;
+        text-align: center;
+        border: 1px solid #e5e5e5;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+
+        .form input {
+            font-family: "Roboto", sans-serif;
+            outline: 0;
+            background: #f7f7f7;
+            width: 100%;
+            border: 1px solid #ddd;
+            margin: 0 0 20px;
+            padding: 12px;
+            box-sizing: border-box;
+            font-size: 14px;
+            border-radius: 5px;
+        }
+
+        .form button {
+            font-family: "Roboto", sans-serif;
+            text-transform: uppercase;
+            outline: 0;
+            background: #ff424e;
+            width: 100%;
+            border: 0;
+            padding: 14px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+
+        .form .message {
+            margin: 15px 0 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+            .form .message a {
+                color: #ff424e;
+                font-weight: bold;
+                text-decoration: none;
+            }
+
+        .form .password-field {
+            position: relative;
+        }
+
+        .form .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 20%;
+            cursor: pointer;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .form .forgot-password {
+            text-align: right;
+            margin-top: -15px;
+            margin-bottom: 20px;
+        }
+
+            .form .forgot-password a {
+                color: #ff424e;
+                font-size: 14px;
+                text-decoration: none;
+            }
+</style>
+
+<script>
+    function togglePasswordVisibility() {
+        var passwordField = document.getElementById("password");
+        var toggleIcon = document.getElementById("togglePassword");
+
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            toggleIcon.textContent = "Ẩn";
+        } else {
+            passwordField.type = "password";
+            toggleIcon.textContent = "Hiện";
+        }
+    }
+</script>
+
+<div class="login-page">
+    <div class="form">
+        <h3 style="color: #333; font-weight: bold;">Đăng nhập</h3>
+        <form action="/LoginUser/LoginAccountCus" class="login-form" method="post">
+            <p class="field-validation-error">@ViewBag.ErrorInfo</p>
+            <p><input type="text" placeholder="Tài khoản*" name="TKhoan" /></p>
+
+            <div class="password-field">
+                <p><input type="password" id="password" placeholder="Mật khẩu*" name="MKhau" /></p>
+                <span id="togglePassword" class="toggle-password" onclick="togglePasswordVisibility()">Hiện</span>
+            </div>
+
+            <div class="forgot-password">
+                <p><a href="/LoginUser/ForgotPassword">Quên mật khẩu?</a></p>
+            </div>
+
+            <button type="submit">Đăng nhập</button>
+            <p class="message">Chưa có tài khoản? <a href="~/LoginUser/RegisterCus">Đăng kí ngay</a></p>
+        </form>
+    </div>
+</div>

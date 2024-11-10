@@ -1,0 +1,106 @@
+﻿@model BanSach.Models.SanPham
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4 font-weight-bold ">Xóa thông tin sản phẩm</h2>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4 font-weight-bold ">
+                    @Html.DisplayName("Tên sản phẩm")
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.TenSP)
+                </dd>
+
+                <dt class="col-sm-4 font-weight-bold">
+                    @Html.DisplayName("Mô tả")
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.MoTa)
+                </dd>
+
+                <dt class="col-sm-4 font-weight-bold">
+                    @Html.DisplayName("Giá bán")
+                </dt>
+                <dd class="col-sm-8 text-danger ">
+                    @string.Format("{0:#,##0} VND", Model.GiaBan)
+                </dd>
+
+                <dt class="col-sm-4 font-weight-bold">
+                    @Html.DisplayName("Hình ảnh")
+                </dt>
+                <dd class="col-sm-8">
+                    <img src="@Url.Content(Model.HinhAnh)" alt="Hình ảnh sản phẩm" class="img-fluid" />
+                </dd>
+
+                <dt class="col-sm-4 font-weight-bold">
+                    @Html.DisplayName("Số lượng")
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.SoLuong)
+                </dd>
+
+                <dt class="col-sm-4 font-weight-bold">
+                    @Html.DisplayName("Trạng thái sách")
+                </dt>
+                <dd class="col-sm-8">
+                    @if (Model.TrangThaiSach == "Còn hàng")
+                    {
+                        <span style="color: green;">@Html.DisplayFor(model => model.TrangThaiSach)</span>
+                    }
+                    else if (Model.TrangThaiSach == "Hết hàng")
+                    {
+                        <span style="color: red;">@Html.DisplayFor(model => model.TrangThaiSach)</span>
+                    }
+                    else
+                    {
+                        <span>@Html.DisplayFor(model => model.TrangThaiSach)</span>
+                    }
+                </dd>
+
+
+                <dt class="col-sm-4 font-weight-bold">
+                    @Html.DisplayName("Danh mục")
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.DanhMuc.DanhMuc1)
+                </dd>
+
+                <dt class="col-sm-4 font-weight-bold">
+                    @Html.DisplayName("Tên khuyến mãi")
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.KhuyenMai.TenKhuyenMai)
+                </dd>
+
+                <dt class="col-sm-4 font-weight-bold">
+                    @Html.DisplayName("Nhà xuất bản")
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.NhaXuatBan.Tennxb)
+                </dd>
+
+                <dt class="col-sm-4 font-weight-bold">
+                    @Html.DisplayName("Tên tác giả")
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.TacGia.TenTacGia)
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "mt-4" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions text-center" >
+            <input type="submit" value="Xóa" class="btn btn-danger rounded-sm" />
+            @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-secondary rounded-sm" })
+        </div>
+    }
+</div>

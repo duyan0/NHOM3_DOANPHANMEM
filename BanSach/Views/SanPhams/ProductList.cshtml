@@ -1,0 +1,164 @@
+﻿@using PagedList.Mvc;
+
+@model PagedList.IPagedList<BanSach.Models.SanPham>
+@{
+    ViewBag.Title = "Sách";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .card-pro {
+        text-decoration: none;
+        border-radius: 15px;
+        padding: 10px;
+        text-align: center;
+        margin-top: 20px;
+        transition: transform 0.3s, box-shadow 0.3s;
+        background-color: #f8f9fa;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+        .card-pro:hover {
+            transform: scale(1.08);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-pro a {
+            text-decoration: none;
+            color: inherit;
+            width: 100%;
+        }
+
+        .card-pro img {
+            border-radius: 15px;
+            width: 200px; /* Set the desired width */
+            height: 300px; /* Set the desired height */
+            object-fit: cover; /* Maintain the aspect ratio and cover the container */
+        }
+
+    .availability {
+        margin: 10px 0;
+        font-weight: bold;
+        color: #28a745;
+    }
+
+    .product-name {
+        font-weight: bold;
+        font-size: 1.2em;
+        margin-top: 10px;
+        color: #333;
+    }
+
+    .price {
+        font-weight: bold;
+        color: #dc3545;
+        font-size: 1.1em;
+    }
+
+    .sotrang {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+        .sotrang a {
+            padding: 8px;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+        }
+
+            .sotrang a:hover {
+                background-color: #e8e8e8;
+            }
+
+    .dieuhuongtrang {
+        width: fit-content;
+        text-align: center;
+        margin: 40px auto;
+        color: white;
+    }
+
+        .dieuhuongtrang li a {
+            color: white;
+            padding: 12px;
+            margin: 3px;
+            background-color: green;
+            border-radius: 10px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .dieuhuongtrang .active a, .dieuhuongtrang .active a:hover {
+            background-color: green;
+            color: white;
+            border-radius: 12px;
+        }
+
+        .dieuhuongtrang li a:hover {
+            background-color: green;
+            color: white;
+            border-radius: 12px;
+        }
+
+    h3.page-title {
+        color: white;
+        margin: 30px auto;
+        font-weight: bold;
+        text-align: center;
+    }
+</style>
+
+<h3 class="page-title">Danh sách sản phẩm</h3>
+<div class="container">
+    <div class="row">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex align-items-stretch">
+                    <div class="card-pro">
+                        <a href="~/SanPhams/TrangSP/@item.IDsp">
+                            <img src="~/Content/img/@item.HinhAnh" class="img-fluid" alt="@item.TenSP" />
+                            <p class="availability" style="color: @(item.TrangThaiSach == "Hết hàng" ? "red" : "#28a745")">@item.TrangThaiSach</p>
+                            <p class="product-name">@Html.DisplayFor(model => item.TenSP)</p>
+                            <p class="price">
+                                @string.Format("{0:N0} VND", item.GiaBan)
+                            </p>
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+
+            <div class="text-center" style="width: 100%; padding: 20px;">
+                <h5 class="text-white">Chưa có thông tin sản phẩm</h5>
+                <p class="text-white-50">Sản phẩm này hiện tại không có thông tin hiển thị. Vui lòng kiểm tra lại sau hoặc liên hệ với cửa hàng để biết thêm chi tiết.</p>
+
+                
+                <i class="fas fa-box-open text-white" style="font-size: 50px; margin: 20px;"></i>
+
+                
+                <div style="margin-top: 20px;">
+                    <a href="#" class="btn btn-outline-success rounded-sm">Quay lại trang chủ</a>
+                </div>
+            </div>
+
+
+
+
+        }
+    </div>
+    <div class="dieuhuongtrang">
+        @Html.PagedListPager(Model, page => Url.Action("ProductList", new { page }), new PagedListRenderOptions()
+        {
+            DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+            DisplayLinkToLastPage = PagedListDisplayMode.Always,
+            DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+            DisplayLinkToNextPage = PagedListDisplayMode.Always,
+            LinkToIndividualPageFormat = "{0}"
+        })
+    </div>
+</div>
